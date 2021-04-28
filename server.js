@@ -9,4 +9,8 @@ app.use(express.json())
 
 app.use(express.static('./public'));
 
-app.get('/', (req, res) => res.send('Hello world'))
+app.get('/', (req, res) => res.sendFile(`${__dirname}/public/index.html`));
+
+app.listen(PORT, () => {
+    console.log(`App is currently running on port ${PORT}`)
+});
