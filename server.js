@@ -1,6 +1,6 @@
 const express = require("express");
 const fs = require("fs");
-const { v4: uuidv4 } = require('uuid');
+const db = require('./db')
 const PORT = process.env.PORT || 4040;
 
 const app = express();
@@ -24,26 +24,26 @@ app.get("/api/notes", (req, res) => {
 
 app.get("*", (req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
-const pushNewNote = (note) => {
-  //returns the array to be written to db.json
-  fs.readFile(`${__dirname}/db/db.json`, 'utf8', (err, data) => {
-    if (err) throw err
-    note.id = uuidv4();
-    const previousData = JSON.parse(data);
-    const dbData = [previousData]
-    dbData.push(note)
-    //console.log(dbData)
-    return dbData
-  })
+// const pushNewNote = (note) => {
+//   //returns the array to be written to db.json
+//   fs.readFile(`${__dirname}/db/db.json`, 'utf8', (err, data) => {
+//     if (err) throw err
+//     const previousData = JSON.parse(data);
+//     const dbData = [previousData]
+//     dbData.push(note)
+//     //console.log(dbData)
+//     return dbData
+//   })
   
-}
+// }
 
-app.post("/api/notes", (req, res) => {
+app.post("/api/notes", async (req, res) => {
     //TODO: use uuidv4 to generate unique id and push note object to db.json
     const newNote = req.body;
-    let updatedDB = JSON.stringify(pushNewNote(newNote));
-    //console.log(updatedDB);
-    res.json(updatedDB);
+    const newDB = await db.createNote(newNote);
+    res.json(newDB)
+    
+    
 });
 
 app.listen(PORT, () => {
