@@ -1,6 +1,12 @@
 [
-    {
-        "title":"Test Title",
-        "text":"Test text"
-    }
+  {
+    "title": "Put this on Heroku",
+    "text": "Glad that I managed to get the issue with index.js fixed!",
+    "id": "0f52cf27-a8d6-4991-a8ec-87b84d809c23"
+  },
+  {
+    "title": "Thanks!",
+    "text": "The front end was the hardest part, ironically.",
+    "id": "07f2e1d7-3b24-4402-9a3c-417140d2358b"
+  }
 ]
