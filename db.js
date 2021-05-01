@@ -14,6 +14,18 @@ const createNote = async (noteObject) => {
     return notes
 }
 
+const deleteNote = async (noteID) => {
+    await loadNotes();
+    const index = notes.findIndex((note) => note.id === noteID);
+    if (index < 0) {
+        console.log(`No note found with ID: ${noteID}`)
+        return
+    }
+    notes.splice(index, 1);
+    await saveChanges()
+    return notes
+}
+
 const saveChanges = () => {
     return new Promise((resolve, reject) => {
         fs.writeFile(`${__dirname}/db/db.json`, JSON.stringify(notes, null, 2), (err) => {
@@ -37,4 +49,4 @@ const loadNotes = () => {
     })
 }
 
-module.exports = { createNote }
+module.exports = { createNote, loadNotes, deleteNote }

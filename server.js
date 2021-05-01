@@ -24,27 +24,17 @@ app.get("/api/notes", (req, res) => {
 
 app.get("*", (req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
-// const pushNewNote = (note) => {
-//   //returns the array to be written to db.json
-//   fs.readFile(`${__dirname}/db/db.json`, 'utf8', (err, data) => {
-//     if (err) throw err
-//     const previousData = JSON.parse(data);
-//     const dbData = [previousData]
-//     dbData.push(note)
-//     //console.log(dbData)
-//     return dbData
-//   })
-  
-// }
-
 app.post("/api/notes", async (req, res) => {
     //TODO: use uuidv4 to generate unique id and push note object to db.json
     const newNote = req.body;
     const newDB = await db.createNote(newNote);
     res.json(newDB)
-    
-    
 });
+
+app.delete("/api/notes/:id", async (req, res) => {
+  const newDB = await db.deleteNote(req.params.id);
+  res.json(newDB);
+})
 
 app.listen(PORT, () => {
   console.log(`App is currently running on port ${PORT}`);
